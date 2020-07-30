@@ -71,7 +71,7 @@ knex seed:run
 | x     | Design code around data                                                     |    M     |    30 mins     |   15 mins   |
 | x     | CREATE users table                                                          |    M     |    30 mins     |   15 mins   |
 | x     | CREATE notes table                                                          |    M     |    30 mins     |   15 mins   |
-|       | GET data from user table                                                    |    M     |    30 mins     |   15 mins   |
+| x     | GET data from user table                                                    |    M     |    30 mins     |   15 mins   |
 |       | GET data from notes table                                                   |    M     |    30 mins     |   15 mins   |
 | x     | POST data to user table                                                     |    M     |    30 mins     |   60 mins   |
 |       | POST data from notes table                                                  |    M     |    30 mins     |   15 mins   |
@@ -80,6 +80,7 @@ knex seed:run
 | x     | Delete data from user table                                                 |    M     |    30 mins     |   15 mins   |
 |       | Delete data from notes table                                                |    M     |    30 mins     |   15 mins   |
 |       | Get list of notes, based on username                                        |    M     |    30 mins     |   15 mins   |
+| x     | Frontend -> able to list all users successfully                             |    M     |    30 mins     |   15 mins   |
 |       | Frontend -> able to add note successfully                                   |    M     |    30 mins     |   15 mins   |
 |       | Frontend -> able to edit note successfully                                  |    M     |    30 mins     |   15 mins   |
 |       | Frontend -> able to delete note successfully                                |    M     |    30 mins     |   15 mins   |
@@ -96,6 +97,43 @@ knex seed:run
 | Issue                                         | Where it occurs | Possible solution |           Actual solution           |
 | --------------------------------------------- | :-------------: | :---------------: | :---------------------------------: |
 | Not being able to post onto postgres database |        H        |                   | double checking all query functions |
+| Rendering array of objects in handlebars      |        H        |                   |          (look at index A)          |
+
+Index A:
+Make sure you put response.render AFTER the promise is fulfilled (and not outside the function )
+
+```
+app.get("/get_users", (request, response) => {
+  // Can successfully render the page
+  let getQuery = knex.from("users").select("username", "pass");
+  getQuery
+    .then((rows) => {
+      console.log(rows);
+      response.render("list_users", { users: rows });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+```
+
+NOT
+
+```
+app.get("/get_users", (request, response) => {
+  // Can successfully render the page
+  let getQuery = knex.from("users").select("username", "pass");
+  getQuery
+    .then((rows) => {
+      console.log(rows);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+      response.render("list_users", { users: rows });
+});
+```
 
 #### Code Snippets
 
@@ -214,6 +252,9 @@ exports.seed = function (knex, Promise) {
 
 - [ ] The logic matters more than looking at examples sometimes.
 - [ ] Make sure that you explain the logic to someone (that really helps!)
+- [ ] So glad that I created the individual repositories for each library - that helps SO MUCH
+- [ ] Code snippets are freaking awesome
+- [ ] Knowing what's going on is actually so much better - coding is much more fun that way - you actually get to follow the logic and such.
 
 #### Credits :recycle:
 
