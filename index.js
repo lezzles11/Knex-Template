@@ -12,6 +12,27 @@ const hbs = require("express-handlebars");
 // using the package
 const app = express();
 
+const knex = require("knex")({
+  client: "postgresql",
+  connection: {
+    database: "postgres",
+    user: "postgres",
+    password: "orange",
+  },
+});
+
+let query = knex.select("username", "pass").from("users");
+// print to screen the command
+console.log(query.toSQL());
+
+query
+  .then((rows) => {
+    console.log(rows);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
 // Configure for HBS
 app.engine(
   "hbs",
@@ -35,6 +56,10 @@ app.get("/", (request, response) => {
 });
 app.get("/form", (request, response) => {
   response.render("form");
+});
+app.post("/submitted", (request, response) => {
+  // request is the client (which is YOU, submitting the data)
+  response.send(request.body);
 });
 
 // at the end of your application, you just connect to the port
