@@ -51,26 +51,16 @@ app.get("/", (request, response) => {
   response.render("home");
 });
 app.get("/form", (request, response) => {
-  response.render("form");
+  response.render("create_user_form");
 });
 
 /** # Get List of Users Method #
 /*  ====================== */
 /** Model and Controller */
 
-function getAllUsers() {
-  console.log("Calling function getAllUsers");
-  let getQuery = knex.from("users").select("username", "pass");
-  let users = returnQuery(getQuery);
-  console.log("TYPE - should be array of objects");
-  console.log("Type: " + typeof users);
-  return users;
-}
-
 // parse the users into array of objects - should i do this through the frontend or backend?
 app.get("/get_users", (request, response) => {
   // Can successfully render the page
-  let renderUsers = [];
   let getQuery = knex.from("users").select("username", "pass");
   getQuery
     .then((rows) => {

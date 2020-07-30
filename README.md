@@ -76,7 +76,7 @@ knex seed:run
 | x     | POST data to user table                                                     |    M     |    30 mins     |   60 mins   |
 |       | POST data from notes table                                                  |    M     |    30 mins     |   15 mins   |
 | x     | PUT (edit) data from user table                                             |    M     |    30 mins     |   15 mins   |
-|       | PUT (edit)data from notes table                                             |    M     |    30 mins     |   15 mins   |
+|       | PUT (edit) data from notes table                                            |    M     |    30 mins     |   15 mins   |
 | x     | Delete data from user table                                                 |    M     |    30 mins     |   15 mins   |
 |       | Delete data from notes table                                                |    M     |    30 mins     |   15 mins   |
 |       | Get list of notes, based on username                                        |    M     |    30 mins     |   15 mins   |
@@ -85,9 +85,23 @@ knex seed:run
 |       | Frontend -> able to edit note successfully                                  |    M     |    30 mins     |   15 mins   |
 |       | Frontend -> able to delete note successfully                                |    M     |    30 mins     |   15 mins   |
 
-### ERD Table
+### Reference
+
+#### ERD Table
 
 ![UML](https://www.dropbox.com/s/cwsgbxtlhurkgux/_ERD%20with%20colored%20entities%20example%20%28UML%20notation%29.png?raw=1)
+
+#### Routes
+
+| Done? | Route         | Method | What it does          | Parameters     |
+| ----- | ------------- | :----: | --------------------- | -------------- |
+|       | /get_users    |  GET   | Get all users         |                |
+|       | /get_notes    |  GET   | Get all notes         |                |
+|       | /get_user/:id |  GET   | Get user, based on id |                |
+|       | /post_user    |  POST  | Post new user         | username, pass |
+|       | /put_user     |  PUT   | Edit user             |                |
+|       | /post_note    |  POST  | Post new note         |                |
+|       | /put_note     |  PUT   | Edit note             |                |
 
 ## Issues and Resolutions :flashlight:
 
@@ -255,6 +269,7 @@ exports.seed = function (knex, Promise) {
 - [ ] So glad that I created the individual repositories for each library - that helps SO MUCH
 - [ ] Code snippets are freaking awesome
 - [ ] Knowing what's going on is actually so much better - coding is much more fun that way - you actually get to follow the logic and such.
+- [ ] Plan for the route names
 
 #### Credits :recycle:
 
