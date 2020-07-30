@@ -25,6 +25,14 @@ let query = knex.select("username", "pass").from("users");
 // print to screen the command
 console.log(query.toSQL());
 
+// column 1: username
+// column 2: pass
+
+let query2 = knex.insert({ username: "Meow", pass: "meowpass" }).into("users");
+let query3 = knex
+  .insert({ username: "whiskey", pass: "whiskeyspass" })
+  .into("users");
+
 query
   .then((rows) => {
     console.log(rows);
@@ -32,7 +40,21 @@ query
   .catch((error) => {
     console.log(error);
   });
+query2
+  .then((rows) => {
+    console.log(rows);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
+query3
+  .then((rows) => {
+    console.log(rows);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 // Configure for HBS
 app.engine(
   "hbs",
