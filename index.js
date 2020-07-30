@@ -97,6 +97,28 @@ app.post("/post_user", (request, response) => {
 /** # Edit User Method #
 /*  ====================== */
 /** 1) Model and Controller */
+
+app.get("/edit_user_form/:username", (request, response) => {
+  // #TODO: Create query that would get a user, based on username
+  console.log("What variable holds username?");
+  console.log(request.params.username);
+  response.render("edit_user_form", { username: request.params.username });
+});
+
+/*
+app.get("/get_users", (request, response) => {
+  // Can successfully render the page
+  let getQuery = knex.from("users").select("username", "pass");
+  getQuery
+    .then((rows) => {
+      console.log(rows);
+      response.render("get_users", { users: rows });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+*/
 function editUser(getUser, newPassword) {
   console.log("Editing user");
   let query = knex("users")
@@ -105,9 +127,27 @@ function editUser(getUser, newPassword) {
   acceptQuery(query);
 }
 
+app.post("/put_user/:username", (request, response) => {
+  console.log("supposed to render username");
+  let username = request.params.username;
+  console.log("Supposed to render password");
+  let newPass = request.body.newPassword;
+  console.log(request.body.newPassword);
+  let getQuery = knex("users")
+    .update({ pass: newPass })
+    .where("username", username);
+  getQuery
+    .then((rows) => {
+      console.log(rows);
+      response.render("home");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
 /** # Delete User #
 /*  ====================== */
-/** 1) Model and Controller */
+/** Model and Controller */
 function deleteUser(getUser) {
   console.log("Deleting user");
   let query = knex("users").where({ username: getUser }).del();

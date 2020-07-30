@@ -72,16 +72,16 @@ knex seed:run
 | x     | CREATE users table                                                          |    M     |    30 mins     |   15 mins   |
 | x     | CREATE notes table                                                          |    M     |    30 mins     |   15 mins   |
 | x     | GET data from user table                                                    |    M     |    30 mins     |   15 mins   |
-|       | GET data from notes table                                                   |    M     |    30 mins     |   15 mins   |
+| x     | GET data from notes table                                                   |    M     |    30 mins     |   15 mins   |
 | x     | POST data to user table                                                     |    M     |    30 mins     |   60 mins   |
-|       | POST data from notes table                                                  |    M     |    30 mins     |   15 mins   |
+| x     | POST data to notes table                                                    |    M     |    30 mins     |   15 mins   |
 | x     | PUT (edit) data from user table                                             |    M     |    30 mins     |   15 mins   |
 |       | PUT (edit) data from notes table                                            |    M     |    30 mins     |   15 mins   |
 | x     | Delete data from user table                                                 |    M     |    30 mins     |   15 mins   |
 |       | Delete data from notes table                                                |    M     |    30 mins     |   15 mins   |
 |       | Get list of notes, based on username                                        |    M     |    30 mins     |   15 mins   |
 | x     | Frontend -> able to list all users successfully                             |    M     |    30 mins     |   15 mins   |
-|       | Frontend -> able to add note successfully                                   |    M     |    30 mins     |   15 mins   |
+| x     | Frontend -> able to add note successfully                                   |    M     |    30 mins     |   15 mins   |
 |       | Frontend -> able to edit note successfully                                  |    M     |    30 mins     |   15 mins   |
 |       | Frontend -> able to delete note successfully                                |    M     |    30 mins     |   15 mins   |
 
@@ -101,7 +101,7 @@ knex seed:run
 | x     | /note_form          | note_form | GET    | Get note form               | action="/post_note" method="post" |
 | x     | /post_note          | post_note | POST   | Post new note               | username, content                 |
 | x     | /get_users          | get_users | GET    | Get all users               |                                   |
-|       | /get_notes          | get_notes | GET    | Get all notes               |                                   |
+| x     | /get_notes          | get_notes | GET    | Get all notes               |                                   |
 |       | /get_user/:username | get_user  | GET    | Get user, based on username |                                   |
 |       | /put_user           | put_user  | PUT    | Edit user                   |                                   |
 |       | /put_note           | put_note  | PUT    | Edit note                   |                                   |
