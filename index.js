@@ -45,13 +45,13 @@ const Note = bookshelf.model("Note", {
 //   .update({ pass: "newpass" })
 //   .where("username", "Meow");
 
-// function acceptQuery(q) {
-//   q.then((rows) => {
-//     console.log(rows);
-//   }).catch((error) => {
-//     console.log(error);
-//   });
-// }
+function acceptQuery(q) {
+  q.then((rows) => {
+    console.log(rows);
+  }).catch((error) => {
+    console.log(error);
+  });
+}
 
 // function postNote(content) {}
 // acceptQuery(query5);
@@ -79,11 +79,19 @@ app.get("/", (request, response) => {
 app.get("/form", (request, response) => {
   response.render("form");
 });
+function acceptQuery(q) {
+  q.then((rows) => {
+    console.log(rows);
+  }).catch((error) => {
+    console.log(error);
+  });
+}
 function postUser(newUsername, newPassword) {
   console.log("Creating new user");
-  return knex.raw(
-    `INSERT INTO Users (username, pass) VALUES (${newUsername}, ${newPassword})`
-  );
+  let newQuery = knex
+    .insert({ username: newUsername, pass: newPassword })
+    .into("users");
+  acceptQuery(newQuery);
 }
 app.post("/submitted", (request, response) => {
   // request is the client (which is YOU, submitting the data)
@@ -91,8 +99,8 @@ app.post("/submitted", (request, response) => {
   let newPassword = request.body.newPassword;
   console.log("Username: " + newUsername);
   console.log("Password: " + newPassword);
+  postUser(newUsername, newPassword);
   response.send(request.body);
-  //   postUser(newUsername, newPassword)
   //     .then(function () {
   //       response.send(request.body);
   //     })
