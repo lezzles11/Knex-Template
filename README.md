@@ -27,6 +27,101 @@ The purpose of this repository is to have a postgres/knex example to reference t
 | -------------------- | :-------------: | :---------------: | :-------------: |
 | Creating a checklist |        H        |       2hrs        |     2.5hrs      |
 
+#### Code Snippets
+
+- [ ] Knex: One to many relationship
+
+##### ONE TO MANY RELATIONSHIP
+
+###### classes
+
+id | primary key ()
+name | string
+
+###### teachers
+
+id | primary key
+name | string
+class_id | foreign key (references table below )
+
+```
+// Classes Table
+exports.up = function (knex, Promise) {
+  return knex.schema.createTable("classes", (table) => {
+    table.increments();
+    table.string("name");
+    table.string("classroom");
+    table.string("period");
+    table.timestamps(false, true);
+  });
+};
+
+exports.down = function (knex, Promise) {
+  return knex.schema.dropTable("classes");
+};
+// Teachers Table
+exports.up = function (knex, Promise) {
+  return knex.schema.createTable("teachers", (table) => {
+    table.increments();
+    table.string("name");
+    // The unique is necessary to guarantee it is a one-to-one relation.
+    table.integer("class_id").unsigned().unique();
+    // foreign id is referenced here
+    table.foreign("class_id").references("classes.id");
+    table.timestamps(false, true);
+  });
+};
+
+exports.down = function (knex, Promise) {
+  return knex.schema.dropTable("teachers");
+};
+
+```
+
+##### MANY TO MANY RELATIONSHIP
+
+###### subjects
+
+id | primary key
+name | string
+class_id | foreign key (references table below )
+
+###### students
+
+id | primary key
+name | string
+
+###### students_subjects
+
+id | primary key
+foreign key | student_id
+foreign key | subject_id
+
+```
+exports.up = function(knex,Promise){
+    // Create table subjects
+    return knex.schema.createTable("subjects",(subjects)=>
+        subjects.increments();
+        subjects.string("name");
+        subjects.timestamps(false,true);
+    }).then(()=>{
+        // Then create table students_subjects
+        return knex.schema.createTable("students_subjects",(studentsSubjects)=>{
+            studentsSubjects.increments();
+            studentsSubjects.integer("student_id").unsigned();
+            studentsSubjects.foreign("student_id").references("students.id");
+            studentsSubjects.integer("subject_id").unsigned();
+            studentsSubjects.foreign("subject_id").references("subjects.id");
+        });
+    });
+}
+
+exports.down = function(knex,Promise){
+    return knex.schema.dropTable('students_subjects')
+            .then(()=>knex.schema.dropTable('subjects'));
+}
+```
+
 #### What is one thing that I learned from doing this project? :books:
 
 #### Credits :recycle:

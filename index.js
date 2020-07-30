@@ -37,6 +37,10 @@ let query4 = knex("users")
   .update({ pass: "newpassword" })
   .where("username", "whiskey");
 
+let query5 = knex("users")
+  .update({ pass: "newpass" })
+  .where("username", "Meow");
+
 function acceptQuery(q) {
   q.then((rows) => {
     console.log(rows);
@@ -45,8 +49,7 @@ function acceptQuery(q) {
   });
 }
 
-acceptQuery(query);
-acceptQuery(query4);
+acceptQuery(query5);
 // Configure for HBS
 app.engine(
   "hbs",
@@ -80,3 +83,56 @@ app.post("/submitted", (request, response) => {
 app.listen(3000, () => {
   console.log("Port works on 3000");
 });
+
+/*
+
+ONE TO MANY RELATIONSHIP 
+
+classes 
+==========
+id | primary key ()
+name | string 
+
+------------------
+
+teachers
+============ 
+id | primary key
+name | string 
+class_id | foreign key (references table below )
+
+*/
+// Classes Table
+exports.up = function (knex, Promise) {
+  return knex.schema.createTable("classes", (table) => {
+    table.increments();
+    table.string("name");
+    table.string("classroom");
+    table.string("period");
+    table.timestamps(false, true);
+  });
+};
+
+exports.down = function (knex, Promise) {
+  return knex.schema.dropTable("classes");
+};
+// Teachers Table
+exports.up = function (knex, Promise) {
+  return knex.schema.createTable("teachers", (table) => {
+    table.increments();
+    table.string("name");
+    // The unique is necessary to guarantee it is a one-to-one relation.
+    table.integer("class_id").unsigned().unique();
+    // foreign id is referenced here
+    table.foreign("class_id").references("classes.id");
+    table.timestamps(false, true);
+  });
+};
+
+exports.down = function (knex, Promise) {
+  return knex.schema.dropTable("teachers");
+};
+
+/*
+MANY TO MANY RELATIONSHIP
+*/
