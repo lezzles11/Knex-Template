@@ -50,8 +50,8 @@ app.use(bodyParser.json());
 app.get("/", (request, response) => {
   response.render("home");
 });
-app.get("/form", (request, response) => {
-  response.render("create_user_form");
+app.get("/user_form", (request, response) => {
+  response.render("user_form");
 });
 
 /** # Get List of Users Method #
@@ -65,7 +65,7 @@ app.get("/get_users", (request, response) => {
   getQuery
     .then((rows) => {
       console.log(rows);
-      response.render("list_users", { users: rows });
+      response.render("get_users", { users: rows });
     })
     .catch((error) => {
       console.log(error);
