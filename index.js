@@ -14,36 +14,6 @@ const knex = require("knex")({
     password: "orange",
   },
 });
-// Bookshelf is a package that helps you
-// #TODO: What is this supposed to do?
-const bookshelf = require("bookshelf")(knex);
-
-const User = bookshelf.model("User", {
-  tableName: "users",
-  notes() {
-    return this.hasMany("Note");
-  },
-});
-
-const Note = bookshelf.model("Note", {
-  tableName: "notes",
-  user() {
-    return this.belongsTo("User");
-  },
-});
-
-// let query2 = knex.insert({ username: "Meow", pass: "meowpass" }).into("users");
-// let query3 = knex
-//   .insert({ username: "whiskey", pass: "whiskeyspass" })
-//   .into("users");
-
-// let query4 = knex("users")
-//   .update({ pass: "newpassword" })
-//   .where("username", "whiskey");
-
-// let query5 = knex("users")
-//   .update({ pass: "newpass" })
-//   .where("username", "Meow");
 
 function acceptQuery(q) {
   q.then((rows) => {
@@ -53,9 +23,6 @@ function acceptQuery(q) {
   });
 }
 
-// function postNote(content) {}
-// acceptQuery(query5);
-// Configure for HBS
 app.engine(
   "hbs",
   hbs({
@@ -67,7 +34,6 @@ app.engine(
 app.set("view engine", "hbs");
 // configuration to actually use the package
 
-//
 app.use(bodyParser.urlencoded({ extended: false }));
 // this will make sure the response comes, it will be in json (string format)
 app.use(bodyParser.json());
@@ -79,6 +45,8 @@ app.get("/", (request, response) => {
 app.get("/form", (request, response) => {
   response.render("form");
 });
+// POST Functionality! :D
+// POST Model
 function acceptQuery(q) {
   q.then((rows) => {
     console.log(rows);
@@ -93,6 +61,22 @@ function postUser(newUsername, newPassword) {
     .into("users");
   acceptQuery(newQuery);
 }
+
+function editUser(getUser, newPassword) {
+  console.log("Editing user");
+  let query = knex("users")
+    .update({ pass: newPassword })
+    .where("username", getUser);
+  acceptQuery(query);
+}
+
+editUser("lesleyUsername", "newpassword");
+
+function deleteUser(username) {
+  console.log("Deleting user");
+}
+
+// POST Controller
 app.post("/submitted", (request, response) => {
   // request is the client (which is YOU, submitting the data)
   let newUsername = request.body.newUsername;
@@ -101,12 +85,6 @@ app.post("/submitted", (request, response) => {
   console.log("Password: " + newPassword);
   postUser(newUsername, newPassword);
   response.send(request.body);
-  //     .then(function () {
-  //       response.send(request.body);
-  //     })
-  //     .catch(function () {
-  //       response.status(500).send("Something went wrong");
-  //     });
 });
 
 // at the end of your application, you just connect to the port

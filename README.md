@@ -69,11 +69,11 @@ knex seed:run
 | x     | Don't hesitate to change table structure                                    |    M     |    30 mins     |   15 mins   |
 | x     | Don't create tables too early                                               |    M     |    30 mins     |   15 mins   |
 | x     | Design code around data                                                     |    M     |    30 mins     |   15 mins   |
-|       | CREATE users table                                                          |    M     |    30 mins     |   15 mins   |
-|       | CREATE notes table                                                          |    M     |    30 mins     |   15 mins   |
+| x     | CREATE users table                                                          |    M     |    30 mins     |   15 mins   |
+| x     | CREATE notes table                                                          |    M     |    30 mins     |   15 mins   |
 |       | GET data from user table                                                    |    M     |    30 mins     |   15 mins   |
 |       | GET data from notes table                                                   |    M     |    30 mins     |   15 mins   |
-|       | POST data from user table                                                   |    M     |    30 mins     |   15 mins   |
+| x     | POST data to user table                                                     |    M     |    30 mins     |   15 mins   |
 |       | POST data from notes table                                                  |    M     |    30 mins     |   15 mins   |
 |       | PUT (edit) data from user table                                             |    M     |    30 mins     |   15 mins   |
 |       | PUT (edit)data from notes table                                             |    M     |    30 mins     |   15 mins   |
@@ -90,9 +90,9 @@ knex seed:run
 **ERROR**: :gear:
 **RESOLUTION**: :key:
 
-| Issue                | Where it occurs | Possible solution | Actual solution |
-| -------------------- | :-------------: | :---------------: | :-------------: |
-| Creating a checklist |        H        |       2hrs        |     2.5hrs      |
+| Issue                                         | Where it occurs | Possible solution |           Actual solution           |
+| --------------------------------------------- | :-------------: | :---------------: | :---------------------------------: |
+| Not being able to post onto postgres database |        H        |                   | double checking all query functions |
 
 #### Code Snippets
 
