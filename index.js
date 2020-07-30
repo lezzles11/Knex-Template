@@ -1,10 +1,4 @@
-// 1. We're going to create a website
-
-// 2. That has a database
-
-// 3. You can add, edit, delete and get notes
-
-// importing the package
+// Configuration
 const express = require("express");
 
 const bodyParser = require("body-parser");
@@ -20,6 +14,12 @@ const knex = require("knex")({
     password: "orange",
   },
 });
+
+// 2. That has a database
+
+// 3. You can add, edit, delete and get notes
+
+// importing the package
 
 let query = knex.select("username", "pass").from("users");
 // print to screen the command
@@ -83,55 +83,6 @@ app.post("/submitted", (request, response) => {
 app.listen(3000, () => {
   console.log("Port works on 3000");
 });
-
-/*
-
-ONE TO MANY RELATIONSHIP 
-
-classes 
-==========
-id | primary key ()
-name | string 
-
-------------------
-
-teachers
-============ 
-id | primary key
-name | string 
-class_id | foreign key (references table below )
-
-*/
-// Classes Table
-exports.up = function (knex, Promise) {
-  return knex.schema.createTable("classes", (table) => {
-    table.increments();
-    table.string("name");
-    table.string("classroom");
-    table.string("period");
-    table.timestamps(false, true);
-  });
-};
-
-exports.down = function (knex, Promise) {
-  return knex.schema.dropTable("classes");
-};
-// Teachers Table
-exports.up = function (knex, Promise) {
-  return knex.schema.createTable("teachers", (table) => {
-    table.increments();
-    table.string("name");
-    // The unique is necessary to guarantee it is a one-to-one relation.
-    table.integer("class_id").unsigned().unique();
-    // foreign id is referenced here
-    table.foreign("class_id").references("classes.id");
-    table.timestamps(false, true);
-  });
-};
-
-exports.down = function (knex, Promise) {
-  return knex.schema.dropTable("teachers");
-};
 
 /*
 MANY TO MANY RELATIONSHIP

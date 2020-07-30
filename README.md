@@ -4,19 +4,86 @@
 
 The purpose of this repository is to have a postgres/knex example to reference to later.
 
+### Important things to remember about knex :hourglass:
+
+- [ ] Knex: One to many relationship
+- [ ] use .unique(), .foreign() and .references()
+- [ ] The reason why you want to use table.increment() for id is to prevent messy data handling later
+- [ ] Never delete existing migration files!
+- [ ] To start
+
+```
+npm install knex
+knex init
+```
+
+- [ ] Make a migration
+
+```
+knex migrate:make <tablename>
+```
+
+- [ ] Generate tables
+
+```
+knex migrate:latest
+```
+
+- [ ] To rollback (control + z)
+
+```
+knex migrate:rollback
+```
+
+- [ ] Create seed file
+
+```
+knex seed:make seed-users
+```
+
+- [ ] Run seed file
+
+```
+knex seed:run
+```
+
 ### User Stories :telescope:
 
 1. Users will be able to look through the various examples and understand how the knex / postgres query works.
 
+## Vocab
+
+| Word      | Where it occurs  |
+| --------- | :--------------: |
+| Migration |   Create data    |
+| Seed      | Insert fake data |
+
 ## Sprint :athletic_shoe:
 
-| Done? | Component | Priority | Estimated Time | Actual Time |
-| ----- | --------- | :------: | :------------: | :---------: |
-|       | Checklist |    H     |    30 mins     |   30mins    |
-|       |           |    M     |    30 mins     |   10mins    |
-|       |           |    M     |    30 mins     |   15 mins   |
+| Done? | Component                                                                   | Priority | Estimated Time | Actual Time |
+| ----- | --------------------------------------------------------------------------- | :------: | :------------: | :---------: |
+| x     | Checklist                                                                   |    H     |    30 mins     |   30mins    |
+| x     | Design Table First (create ERD diagram)                                     |    M     |    30 mins     |   10mins    |
+| x     | Use foreign keys                                                            |    M     |    30 mins     |   15 mins   |
+| x     | Normalize your data (teachers table should not contain info about students) |    M     |    30 mins     |   15 mins   |
+| x     | Don't hesitate to change table structure                                    |    M     |    30 mins     |   15 mins   |
+| x     | Don't create tables too early                                               |    M     |    30 mins     |   15 mins   |
+| x     | Design code around data                                                     |    M     |    30 mins     |   15 mins   |
+|       | CREATE users table                                                          |    M     |    30 mins     |   15 mins   |
+|       | CREATE notes table                                                          |    M     |    30 mins     |   15 mins   |
+|       | GET data from user table                                                    |    M     |    30 mins     |   15 mins   |
+|       | GET data from notes table                                                   |    M     |    30 mins     |   15 mins   |
+|       | POST data from user table                                                   |    M     |    30 mins     |   15 mins   |
+|       | POST data from notes table                                                  |    M     |    30 mins     |   15 mins   |
+|       | PUT (edit) data from user table                                             |    M     |    30 mins     |   15 mins   |
+|       | PUT (edit)data from notes table                                             |    M     |    30 mins     |   15 mins   |
+|       | Delete data from user table                                                 |    M     |    30 mins     |   15 mins   |
+|       | Delete data from notes table                                                |    M     |    30 mins     |   15 mins   |
+|       |                                                                             |    M     |    30 mins     |   15 mins   |
 
-### Daily Stand Up :hourglass:
+### ERD Table
+
+![UML](https://www.dropbox.com/s/cwsgbxtlhurkgux/_ERD%20with%20colored%20entities%20example%20%28UML%20notation%29.png?raw=1)
 
 ## Issues and Resolutions :flashlight:
 
@@ -29,20 +96,18 @@ The purpose of this repository is to have a postgres/knex example to reference t
 
 #### Code Snippets
 
-- [ ] Knex: One to many relationship
-
 ##### ONE TO MANY RELATIONSHIP
 
 ###### classes
 
-id | primary key ()
-name | string
+- id | primary key ()
+- name | string
 
 ###### teachers
 
-id | primary key
-name | string
-class_id | foreign key (references table below )
+- id | primary key
+- name | string
+- class_id | foreign key (references table below )
 
 ```
 // Classes Table
@@ -82,20 +147,20 @@ exports.down = function (knex, Promise) {
 
 ###### subjects
 
-id | primary key
-name | string
-class_id | foreign key (references table below )
+- id | primary key
+- name | string
+- class_id | foreign key (references table below )
 
 ###### students
 
-id | primary key
-name | string
+- id | primary key
+- name | string
 
 ###### students_subjects
 
-id | primary key
-foreign key | student_id
-foreign key | subject_id
+- id | primary key
+- foreign key | student_id
+- foreign key | subject_id
 
 ```
 exports.up = function(knex,Promise){
@@ -120,6 +185,26 @@ exports.down = function(knex,Promise){
     return knex.schema.dropTable('students_subjects')
             .then(()=>knex.schema.dropTable('subjects'));
 }
+```
+
+#### Insert Seed Data
+
+```
+exports.seed = function (knex, Promise) {
+  // Deletes ALL existing entries
+  returnknex("table_name")
+    .del()
+    .then(function () {
+      // Inserts seed entries
+      returnknex("table_name").insert([
+        { colName: "rowValue1" },
+        { colName: "rowValue2" },
+        { colName: "rowValue3" },
+      ]);
+    });
+};
+
+
 ```
 
 #### What is one thing that I learned from doing this project? :books:
