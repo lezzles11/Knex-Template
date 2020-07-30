@@ -54,6 +54,10 @@ app.get("/user_form", (request, response) => {
   response.render("user_form");
 });
 
+app.get("/note_form", (request, response) => {
+  response.render("note_form");
+});
+
 /** # Get List of Users Method #
 /*  ====================== */
 /** Model and Controller */
@@ -114,7 +118,24 @@ function deleteUser(getUser) {
 
 /** # Post Note Method #
 /*  ====================== */
-/** 1) Model and Controller */
+/** Model and Controller */
+function postNote(getUser, getContent) {
+  console.log("Creating new note");
+  let newQuery = knex
+    .insert({ username: getUser, content: getContent })
+    .into("notes");
+  acceptQuery(newQuery);
+}
+
+app.post("/post_note", (request, response) => {
+  // request is the client (which is YOU, submitting the data)
+  let user = request.body.username;
+  let note = request.body.content;
+  console.log("Username: " + user);
+  console.log("Content: " + note);
+  postNote(user, note);
+  response.send(request.body);
+});
 
 /** # Edit Note Method #
 /*  ====================== */
