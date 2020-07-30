@@ -70,12 +70,12 @@ function editUser(getUser, newPassword) {
   acceptQuery(query);
 }
 
-editUser("lesleyUsername", "newpassword");
-
-function deleteUser(username) {
+function deleteUser(getUser) {
   console.log("Deleting user");
+  let query = knex("users").where({ username: getUser }).del();
+  acceptQuery(query);
 }
-
+deleteUser("newuser");
 // POST Controller
 app.post("/submitted", (request, response) => {
   // request is the client (which is YOU, submitting the data)
