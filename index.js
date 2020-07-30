@@ -33,28 +33,20 @@ let query3 = knex
   .insert({ username: "whiskey", pass: "whiskeyspass" })
   .into("users");
 
-query
-  .then((rows) => {
-    console.log(rows);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-query2
-  .then((rows) => {
-    console.log(rows);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+let query4 = knex("users")
+  .update({ pass: "newpassword" })
+  .where("username", "whiskey");
 
-query3
-  .then((rows) => {
+function acceptQuery(q) {
+  q.then((rows) => {
     console.log(rows);
-  })
-  .catch((error) => {
+  }).catch((error) => {
     console.log(error);
   });
+}
+
+acceptQuery(query);
+acceptQuery(query4);
 // Configure for HBS
 app.engine(
   "hbs",
