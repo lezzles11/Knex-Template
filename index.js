@@ -14,42 +14,47 @@ const knex = require("knex")({
     password: "orange",
   },
 });
+// Bookshelf is a package that helps you
+// #TODO: What is this supposed to do?
+const bookshelf = require("bookshelf")(knex);
 
-// 2. That has a database
+const User = bookshelf.model("User", {
+  tableName: "users",
+  notes() {
+    return this.hasMany("Note");
+  },
+});
 
-// 3. You can add, edit, delete and get notes
+const Note = bookshelf.model("Note", {
+  tableName: "notes",
+  user() {
+    return this.belongsTo("User");
+  },
+});
 
-// importing the package
+// let query2 = knex.insert({ username: "Meow", pass: "meowpass" }).into("users");
+// let query3 = knex
+//   .insert({ username: "whiskey", pass: "whiskeyspass" })
+//   .into("users");
 
-let query = knex.select("username", "pass").from("users");
-// print to screen the command
-console.log(query.toSQL());
+// let query4 = knex("users")
+//   .update({ pass: "newpassword" })
+//   .where("username", "whiskey");
 
-// column 1: username
-// column 2: pass
+// let query5 = knex("users")
+//   .update({ pass: "newpass" })
+//   .where("username", "Meow");
 
-let query2 = knex.insert({ username: "Meow", pass: "meowpass" }).into("users");
-let query3 = knex
-  .insert({ username: "whiskey", pass: "whiskeyspass" })
-  .into("users");
+// function acceptQuery(q) {
+//   q.then((rows) => {
+//     console.log(rows);
+//   }).catch((error) => {
+//     console.log(error);
+//   });
+// }
 
-let query4 = knex("users")
-  .update({ pass: "newpassword" })
-  .where("username", "whiskey");
-
-let query5 = knex("users")
-  .update({ pass: "newpass" })
-  .where("username", "Meow");
-
-function acceptQuery(q) {
-  q.then((rows) => {
-    console.log(rows);
-  }).catch((error) => {
-    console.log(error);
-  });
-}
-
-acceptQuery(query5);
+// function postNote(content) {}
+// acceptQuery(query5);
 // Configure for HBS
 app.engine(
   "hbs",
@@ -74,9 +79,26 @@ app.get("/", (request, response) => {
 app.get("/form", (request, response) => {
   response.render("form");
 });
+function postUser(newUsername, newPassword) {
+  console.log("Creating new user");
+  return knex.raw(
+    `INSERT INTO Users (username, pass) VALUES (${newUsername}, ${newPassword})`
+  );
+}
 app.post("/submitted", (request, response) => {
   // request is the client (which is YOU, submitting the data)
+  let newUsername = request.body.newUsername;
+  let newPassword = request.body.newPassword;
+  console.log("Username: " + newUsername);
+  console.log("Password: " + newPassword);
   response.send(request.body);
+  //   postUser(newUsername, newPassword)
+  //     .then(function () {
+  //       response.send(request.body);
+  //     })
+  //     .catch(function () {
+  //       response.status(500).send("Something went wrong");
+  //     });
 });
 
 // at the end of your application, you just connect to the port
