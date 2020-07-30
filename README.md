@@ -82,7 +82,7 @@ knex seed:run
 |       | Get list of notes, based on username                                        |    M     |    30 mins     |   15 mins   |
 | x     | Frontend -> able to list all users successfully                             |    M     |    30 mins     |   15 mins   |
 | x     | Frontend -> able to add note successfully                                   |    M     |    30 mins     |   15 mins   |
-|       | Frontend -> able to edit note successfully                                  |    M     |    30 mins     |   15 mins   |
+|       | Frontend -> able to edit user successfully                                  |    M     |    30 mins     |   15 mins   |
 |       | Frontend -> able to delete note successfully                                |    M     |    30 mins     |   15 mins   |
 
 ### Reference
@@ -93,18 +93,19 @@ knex seed:run
 
 #### Routes
 
-| Done? | Route               | Filename  | Method | What it does                | Input names / action              |
-| ----- | ------------------- | :-------: | ------ | --------------------------- | --------------------------------- |
-| x     | /                   |   home    | GET    | Home Page                   |                                   |
-| x     | /user_form          | user_form | GET    | Get user form               | action="/post_user" method="post" |
-| x     | /post_user          | post_user | POST   | Post new user               | newUsername, newPassword          |
-| x     | /note_form          | note_form | GET    | Get note form               | action="/post_note" method="post" |
-| x     | /post_note          | post_note | POST   | Post new note               | username, content                 |
-| x     | /get_users          | get_users | GET    | Get all users               |                                   |
-| x     | /get_notes          | get_notes | GET    | Get all notes               |                                   |
-|       | /get_user/:username | get_user  | GET    | Get user, based on username |                                   |
-|       | /put_user           | put_user  | PUT    | Edit user                   |                                   |
-|       | /put_note           | put_note  | PUT    | Edit note                   |                                   |
+| Done? | Route                     | Filename  | Method | What it does                | Input names / action                          |
+| ----- | ------------------------- | :-------: | ------ | --------------------------- | --------------------------------------------- |
+| x     | /                         |   home    | GET    | Home Page                   |                                               |
+| x     | /user_form                | user_form | GET    | Get user form               | action="/post_user" method="post"             |
+| x     | /post_user                |           | POST   | Post new user               | newUsername, newPassword                      |
+| x     | /note_form                | note_form | GET    | Get note form               | action="/post_note" method="post"             |
+| x     | /post_note                |           | POST   | Post new note               | username, content                             |
+| x     | /get_users                | get_users | GET    | Get all users               | a href="/edit_user_form/{{this.username}}     |
+| x     | /edit_user_form/:username | put_note  |        | Edit note                   | action="/put-user/{{username}}" method="post" |
+| x     | /put_user/:username       |           | POST   | Edit user                   |                                               |
+| x     | /get_notes                | get_notes | GET    | Get all notes               |                                               |
+|       | /get_user/:username       | get_user  | GET    | Get user, based on username |                                               |
+|       | /put_note                 | put_note  | PUT    | Edit note                   |                                               |
 
 ## Issues and Resolutions :flashlight:
 
@@ -273,6 +274,7 @@ exports.seed = function (knex, Promise) {
 - [ ] Code snippets are freaking awesome
 - [ ] Knowing what's going on is actually so much better - coding is much more fun that way - you actually get to follow the logic and such.
 - [ ] Plan for the route names
+- [ ] Making sure to console.log every step, and ensure that the parameters you enter are correct
 
 #### Credits :recycle:
 
