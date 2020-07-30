@@ -73,13 +73,16 @@ knex seed:run
 | x     | CREATE notes table                                                          |    M     |    30 mins     |   15 mins   |
 |       | GET data from user table                                                    |    M     |    30 mins     |   15 mins   |
 |       | GET data from notes table                                                   |    M     |    30 mins     |   15 mins   |
-| x     | POST data to user table                                                     |    M     |    30 mins     |   15 mins   |
+| x     | POST data to user table                                                     |    M     |    30 mins     |   60 mins   |
 |       | POST data from notes table                                                  |    M     |    30 mins     |   15 mins   |
-|       | PUT (edit) data from user table                                             |    M     |    30 mins     |   15 mins   |
+| x     | PUT (edit) data from user table                                             |    M     |    30 mins     |   15 mins   |
 |       | PUT (edit)data from notes table                                             |    M     |    30 mins     |   15 mins   |
-|       | Delete data from user table                                                 |    M     |    30 mins     |   15 mins   |
+| x     | Delete data from user table                                                 |    M     |    30 mins     |   15 mins   |
 |       | Delete data from notes table                                                |    M     |    30 mins     |   15 mins   |
-|       |                                                                             |    M     |    30 mins     |   15 mins   |
+|       | Get list of notes, based on username                                        |    M     |    30 mins     |   15 mins   |
+|       | Frontend -> able to add note successfully                                   |    M     |    30 mins     |   15 mins   |
+|       | Frontend -> able to edit note successfully                                  |    M     |    30 mins     |   15 mins   |
+|       | Frontend -> able to delete note successfully                                |    M     |    30 mins     |   15 mins   |
 
 ### ERD Table
 
@@ -208,6 +211,9 @@ exports.seed = function (knex, Promise) {
 ```
 
 #### What is one thing that I learned from doing this project? :books:
+
+- [ ] The logic matters more than looking at examples sometimes.
+- [ ] Make sure that you explain the logic to someone (that really helps!)
 
 #### Credits :recycle:
 

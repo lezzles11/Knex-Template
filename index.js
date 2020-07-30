@@ -23,6 +23,14 @@ function acceptQuery(q) {
   });
 }
 
+function returnQuery(q) {
+  q.then((rows) => {
+    return rows;
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
 app.engine(
   "hbs",
   hbs({
@@ -45,15 +53,37 @@ app.get("/", (request, response) => {
 app.get("/form", (request, response) => {
   response.render("form");
 });
-// POST Functionality! :D
-// POST Model
-function acceptQuery(q) {
-  q.then((rows) => {
-    console.log(rows);
-  }).catch((error) => {
-    console.log(error);
-  });
+
+/** # Get List of Users Method #
+/*  ====================== */
+/** Model and Controller */
+
+function getAllUsers() {
+  console.log("Calling function getAllUsers");
+  let getQuery = knex.from("users").select("username", "pass");
+  let users = returnQuery(getQuery);
+  console.log("TYPE - should be array of objects");
+  console.log("Type: " + typeof users);
+  return users;
 }
+
+// parse the users into array of objects - should i do this through the frontend or backend?
+app.get("/get_users", (request, response) => {
+  // Can successfully render the page
+  let renderUsers = [];
+  let getQuery = knex.from("users").select("username", "pass");
+  getQuery
+    .then((rows) => {
+      console.log(rows);
+      response.render("list_users", { users: rows });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+/** # Post User Method #
+/*  ====================== */
+/** Model and Controller */
 function postUser(newUsername, newPassword) {
   console.log("Creating new user");
   let newQuery = knex
@@ -62,22 +92,7 @@ function postUser(newUsername, newPassword) {
   acceptQuery(newQuery);
 }
 
-function editUser(getUser, newPassword) {
-  console.log("Editing user");
-  let query = knex("users")
-    .update({ pass: newPassword })
-    .where("username", getUser);
-  acceptQuery(query);
-}
-
-function deleteUser(getUser) {
-  console.log("Deleting user");
-  let query = knex("users").where({ username: getUser }).del();
-  acceptQuery(query);
-}
-deleteUser("newuser");
-// POST Controller
-app.post("/submitted", (request, response) => {
+app.post("/post_user", (request, response) => {
   // request is the client (which is YOU, submitting the data)
   let newUsername = request.body.newUsername;
   let newPassword = request.body.newPassword;
@@ -86,6 +101,42 @@ app.post("/submitted", (request, response) => {
   postUser(newUsername, newPassword);
   response.send(request.body);
 });
+
+/** # Edit User Method #
+/*  ====================== */
+/** 1) Model and Controller */
+function editUser(getUser, newPassword) {
+  console.log("Editing user");
+  let query = knex("users")
+    .update({ pass: newPassword })
+    .where("username", getUser);
+  acceptQuery(query);
+}
+
+/** # Delete User #
+/*  ====================== */
+/** 1) Model and Controller */
+function deleteUser(getUser) {
+  console.log("Deleting user");
+  let query = knex("users").where({ username: getUser }).del();
+  acceptQuery(query);
+}
+
+/** # Post Note Method #
+/*  ====================== */
+/** 1) Model and Controller */
+
+/** # Edit Note Method #
+/*  ====================== */
+/** 1) Model and Controller */
+
+/** # Delete Note Method #
+/*  ====================== */
+/** 1) Model and Controller */
+
+/** # Get Notes, based on Username #
+/*  ====================== */
+/** 1) Model and Controller */
 
 // at the end of your application, you just connect to the port
 app.listen(3000, () => {
