@@ -61,8 +61,6 @@ app.get("/note_form", (request, response) => {
 /** # Get List of Users Method #
 /*  ====================== */
 /** Model and Controller */
-
-// parse the users into array of objects - should i do this through the frontend or backend?
 app.get("/get_users", (request, response) => {
   // Can successfully render the page
   let getQuery = knex.from("users").select("username", "pass");
@@ -137,6 +135,21 @@ app.post("/post_note", (request, response) => {
   response.send(request.body);
 });
 
+/** # Get all notes method #
+/*  ====================== */
+/** Controller */
+app.get("/get_notes", (request, response) => {
+  // Can successfully render the page
+  let getQuery = knex.from("notes").select("username", "content");
+  getQuery
+    .then((rows) => {
+      console.log(rows);
+      response.render("get_notes", { notes: rows });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
 /** # Edit Note Method #
 /*  ====================== */
 /** 1) Model and Controller */

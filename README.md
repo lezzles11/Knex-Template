@@ -99,8 +99,8 @@ knex seed:run
 | x     | /user_form          | user_form | GET    | Get user form               | action="/post_user" method="post" |
 | x     | /post_user          | post_user | POST   | Post new user               | newUsername, newPassword          |
 | x     | /note_form          | note_form | GET    | Get note form               | action="/post_note" method="post" |
-|       | /post_note          | post_note | POST   | Post new note               | username, content                 |
-|       | /get_users          | get_users | GET    | Get all users               |                                   |
+| x     | /post_note          | post_note | POST   | Post new note               | username, content                 |
+| x     | /get_users          | get_users | GET    | Get all users               |                                   |
 |       | /get_notes          | get_notes | GET    | Get all notes               |                                   |
 |       | /get_user/:username | get_user  | GET    | Get user, based on username |                                   |
 |       | /put_user           | put_user  | PUT    | Edit user                   |                                   |
