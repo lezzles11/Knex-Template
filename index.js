@@ -1,8 +1,6 @@
 // Configuration
-const app = require("./config");
-
-// using the package
-
+const hbs = require("express-handlebars");
+const app = require("./config/express.js");
 const knex = require("knex")({
   client: "postgresql",
   connection: {
@@ -12,6 +10,15 @@ const knex = require("knex")({
   },
 });
 
+// using the package
+app.engine(
+  "hbs",
+  hbs({
+    extname: ".hbs",
+    defaultLayout: "main",
+    layoutsDir: __dirname + "/views/layouts",
+  })
+);
 function acceptQuery(q) {
   q.then((rows) => {
     console.log(rows);
