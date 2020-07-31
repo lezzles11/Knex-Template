@@ -1,10 +1,7 @@
 // Configuration
-const express = require("express");
+const app = require("./config");
 
-const bodyParser = require("body-parser");
-const hbs = require("express-handlebars");
 // using the package
-const app = express();
 
 const knex = require("knex")({
   client: "postgresql",
@@ -22,29 +19,6 @@ function acceptQuery(q) {
     console.log(error);
   });
 }
-
-function returnQuery(q) {
-  q.then((rows) => {
-    return rows;
-  }).catch((error) => {
-    console.log(error);
-  });
-}
-
-app.engine(
-  "hbs",
-  hbs({
-    extname: ".hbs",
-    defaultLayout: "main",
-    layoutsDir: __dirname + "/views/layouts",
-  })
-);
-app.set("view engine", "hbs");
-// configuration to actually use the package
-
-app.use(bodyParser.urlencoded({ extended: false }));
-// this will make sure the response comes, it will be in json (string format)
-app.use(bodyParser.json());
 
 // creating a route
 app.get("/", (request, response) => {
@@ -94,33 +68,23 @@ app.post("/post_user", (request, response) => {
   response.send(request.body);
 });
 
-/** # Login Method #
+/** # Get User Notes Method #
 /*  ====================== */
 /** Model and Controller */
-// #TODO: CURRENT
 // getUser, by passing in username
-// i want user name, pass and notes
-// join the tables first, and then find the notes accordingly
-
 // current table structure:
 // users: username, pass, created
 // notes: username, content
-function getUser(searchTerm) {
+function getUserNotes(searchTerm) {
   console.log("Getting " + searchTerm + "'s notes!");
   console.log("I want this to output all of lesleyUsername's notes");
   const query = knex
     .select("content")
-
     .from("notes")
     .leftJoin("users", "notes.username", "users.username")
     .where("notes.username", "=", searchTerm);
   acceptQuery(query);
-
-  // knex query to get notes, given user name
-  // execute query
 }
-console.log("Getting all of lesleyUsername's notes");
-getUser("lesleyUsername");
 
 /** # Edit User Method #
 /*  ====================== */
