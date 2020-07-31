@@ -10,7 +10,7 @@ The purpose of this repository is to have a postgres/knex example to reference t
 - [ ] use .unique(), .foreign() and .references()
 - [ ] The reason why you want to use table.increment() for id is to prevent messy data handling later
 - [ ] Never delete existing migration files!
-- [ ] To start
+- [ ] To start (knex cheatsheet here: [Cheatsheet](https://devhints.io/knex))
 
 ```
 npm install knex
@@ -106,6 +106,8 @@ knex seed:run
 | x     | /get_notes                | get_notes | GET    | Get all notes               |                                               |
 |       | /get_user/:username       | get_user  | GET    | Get user, based on username |                                               |
 |       | /put_note                 | put_note  | PUT    | Edit note                   |                                               |
+|       | /login                    |   login   | GET    | Allows user to login        |                                               |
+|       | /login                    |           | POST   | passport authentication     |                                               |
 
 ## Issues and Resolutions :flashlight:
 

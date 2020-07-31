@@ -94,6 +94,34 @@ app.post("/post_user", (request, response) => {
   response.send(request.body);
 });
 
+/** # Login Method #
+/*  ====================== */
+/** Model and Controller */
+// #TODO: CURRENT
+// getUser, by passing in username
+// i want user name, pass and notes
+// join the tables first, and then find the notes accordingly
+
+// current table structure:
+// users: username, pass, created
+// notes: username, content
+function getUser(searchTerm) {
+  console.log("Getting " + searchTerm + "'s notes!");
+  console.log("I want this to output all of lesleyUsername's notes");
+  const query = knex
+    .select("content")
+
+    .from("notes")
+    .leftJoin("users", "notes.username", "users.username")
+    .where("notes.username", "=", searchTerm);
+  acceptQuery(query);
+
+  // knex query to get notes, given user name
+  // execute query
+}
+console.log("Getting all of lesleyUsername's notes");
+getUser("lesleyUsername");
+
 /** # Edit User Method #
 /*  ====================== */
 /** 1) Model and Controller */
